@@ -1,7 +1,5 @@
 # Conversão de números para palavras
 
-Projeto criado com a finalidade de apresentar soluções para o desafio da vaga CERTI - Estágio em Desenvolvimento
-
 
 ## Desafio
 
