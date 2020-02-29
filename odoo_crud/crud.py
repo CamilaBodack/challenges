@@ -17,48 +17,59 @@ uid = basic_login.authenticate(db, username, password, {})
 models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
 
-# create
+'''create user. Function that orchestrate execution is 'execute_kw' with default parameters: db, uid, password
+model name in this case is 'res.partner', method name: 'create', and list with parameters
+'''
 def create_data(name):
-          models.execute_kw(db, uid, password,
-                            'res.partner', 'create',
-                            [{'name': name }])
+    models.execute_kw(db, uid, password,
+                     'res.partner', 'create',
+                     [{'name': name }])
 
 
-# update
+'''update user. Function to orchestrate execution is 'execute_kw' with default parameters: db, uid, password
+model name in this case is 'res.partner', method name: 'write' (records in odoo are made by this method), and list with parameters
+'''
 def update(id, name):
-          models.execute_kw(db, uid, password, 'res.partner', 'write',
-                            [[id], {'name': name}])
+    models.execute_kw(db, uid, password, 'res.partner', 'write',
+                      [[id], {'name': name}])
 
 
-def check_update(id):
-    models.execute_kw(db, uid, password, 'res.partner', 'name_get', [[id]])
-
-
-# delete records http://localhost:8069
+'''delete user. Function to orchestrate execution is 'execute_kw' with default parameters: db, uid, password
+model name in this case is 'res.partner', method name: 'unlink' (delete in odoo are made by this method), and list with parameters
+'''
 def delete_data(ids):
     list = []
     list.append(ids)
-
     models.execute_kw(db, uid, password,
                       'res.partner', 'unlink', list)
 
 
-# lists records using method search_read
+'''list users. Function to orchestrate execution is 'execute_kw' with default parameters: db, uid, password
+model name in this case is 'res.partner', method name: 'search_read' (search and read methods united), and list with parameters
+'''
 def list_data():
     user_data = models.execute_kw(db, uid, password,
-                    'res.partner', 'search_read',
-                    [[['customer', '=', True]]],
-                    {'fields': ['display_name', 'id'], 'limit': 10})
+                                 'res.partner', 'search_read',
+                                 [[['customer', '=', True]]],
+                                 {'fields': ['display_name', 'id'], 'limit': 10})
 
     print(user_data)
     for i in user_data:
         print(i)
 
-# create opportunity
+
+'''create opportunity in crm. Function to orchestrate execution is 'execute_kw' with default parameters: db, uid, password
+model name in this case is 'crm.lead', method name: 'create', and list with parameters
+'''
+
 def create_opportunity(opportunity, part_id, plan_revenue):
-          models.execute_kw(db, uid, password,
-                            'crm.lead', 'create',
-                            [{'company_id': 1, 'priority': "3", 'name': opportunity, 'partner_id': part_id, 'planned_revenue': plan_revenue}])
+    models.execute_kw(db, uid, password,
+                     'crm.lead', 'create',
+                     [{'company_id': 1, 'priority': "3", 'name': opportunity, 'partner_id': part_id, 'planned_revenue': plan_revenue}])
+
+
+
+# show options to users interactions
 
 def options():
     options = 0
@@ -77,7 +88,6 @@ def options():
             id = int(input("Informe o id"))
             name = input("Insira o novo nome:")
             update(id, name)
-            check_update(id)
         elif options == 3:
             ids = int(input("Insira o(s) id(s):"))
             delete_data(ids)
@@ -94,5 +104,5 @@ def options():
         else:
             print("Insira uma opção válida")
 
-
+            
 options()
