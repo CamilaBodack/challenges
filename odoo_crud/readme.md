@@ -5,7 +5,7 @@
 Make external API connect throught odoo crud
 
 
-## Requerimentos
+## Requeriments
 
 - Linux
  - 1.Python version superior to 3
