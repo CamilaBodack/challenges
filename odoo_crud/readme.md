@@ -2,7 +2,7 @@
 
 
 ## Challenge:
-Make external API connect throught odoo crud
+Make external API connect through odoo crud
 
 
 ## Requeriments
